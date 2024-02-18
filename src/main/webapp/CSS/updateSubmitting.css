@@ -1,0 +1,25 @@
+.optionDarkColor{
+    color: darkgrey;
+}
+
+#buttonContainer{
+    display: grid;
+}
+
+#sendUpdateToOrder{
+    width: 40%;
+    height: 100%;
+    place-self: center;
+    align-self: center;
+}
+
+#message{
+    width: 65%;
+    height: 23%;
+    margin-top: 2%;
+}
+
+#descriptionPar{
+    font-weight: 500;
+    color: snow;
+}

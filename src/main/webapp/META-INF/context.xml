@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/">
+    <Resource name="jdbc/ShApp"
+              auth="Container"
+              driverClassName="com.mysql.jdbc.Driver"
+              type="javax.sql.DataSource"
+              username="xxx"
+              password="xxx"
+              url ="jdbc:mysql://xxx:3306/shappdb?useSSL=true&amp;">
+
+    </Resource>
+              <!--INSERIRE L' URL DELL' SQL DATABASE DI AZURE-->
+</Context>
+
+        <!--url="jdbc:mysql://localhost:3306/shappdb?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>-->

@@ -1,0 +1,9 @@
+body{
+    background-image: url("../Images/login-Img.jpg");
+}
+
+#errorPara{
+    background: maroon;
+    color: peachpuff;
+    margin-top: 20px;
+}

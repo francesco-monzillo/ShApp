@@ -1,0 +1,78 @@
+
+#form{
+    height: 80%;
+    flex: auto;
+    place-self: flex-start;
+    display: inline-flex;
+}
+
+.body_content{
+    height: 100%; !important;
+}
+
+#formDiv{
+    display: block;
+    overflow: auto;
+    height: 80%;
+}
+
+label{
+    color: darkgrey;
+    display: block;
+}
+
+
+#formDiv::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+#formDiv::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: transparent;
+}
+
+#formDiv::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: rebeccapurple;
+}
+
+.title{
+    border: 3px solid rebeccapurple;
+    margin: 7% 17% 7% 15.8%;
+}
+
+.input{
+    width: 58%;
+    height: 7%;
+    margin-bottom: 10%;
+    border: 3px solid rebeccapurple;
+    color: dimgrey;
+}
+
+.propertyCheckbox{
+    margin: 10px;
+}
+
+.propertyDetailDiv{
+    text-align: left;
+}
+
+.propertiesDiv {
+    display: grid;
+}
+
+
+button{
+    display: block;
+    background-color: transparent;
+    color: darkgrey;
+    width: 25%;
+    height: 8%;
+    margin-bottom: 2%;
+}
