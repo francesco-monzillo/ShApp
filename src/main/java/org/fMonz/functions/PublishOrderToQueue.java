@@ -54,7 +54,7 @@ public class PublishOrderToQueue {
 
 
         if(executionSucceded)
-            return request.createResponseBuilder(HttpStatus.OK).body("Sent a message:\n '" + message + "'\n on topic:" + topic).build();
+            return request.createResponseBuilder(HttpStatus.OK).build();
         else
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Invalid connString").build();
 
