@@ -242,6 +242,7 @@ public class OrdersDAO {
                 try{
                     c = cD.retrieve(courierName);
                 }catch (NotFoundException e){
+
                     System.out.println("Order associated to Courier '"+ courierName +"' not assigned yet");
                 }
 
