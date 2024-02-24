@@ -22,7 +22,7 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/generalLayout.css">
   <!--<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/formOrderSubmittingLayout.css">-->
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/CSS/visualizeOrderLayout.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 </head>
@@ -60,7 +60,7 @@
         if(! orderShipmentState.equals("Consegnato")){
           atLeastOneVisualized = true;
         %>
-        <div class="ordersDiv" style="height: 76%" id="<%=order.getId()%>">
+        <div class="ordersDiv" style="height: 76% !important;" id="<%=order.getId()%>">
           <form action="<%=request.getContextPath()%>/orderDetailsServlet" method="post">
             <p class="titlePar">Assegnato in data <%=order.getAssignmentDate()%></p>
             <p class="littleDetailsPars">Per conto di: <%=order.getOrderDisp().getName()%></p>

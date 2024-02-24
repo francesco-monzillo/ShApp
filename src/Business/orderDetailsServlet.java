@@ -3,6 +3,7 @@ package Business;
 import Model.Beans.Orders;
 import Model.Beans.Updates;
 import Model.Beans.User;
+import Model.DAOs.OrdersDAO;
 import Model.DAOs.StateDAO;
 import Model.DAOs.UpdatesDAO;
 import Model.DAOs.UserDAO;
@@ -21,6 +22,7 @@ public class orderDetailsServlet extends HttpServlet {
     private UpdatesDAO updatesDAO;
     private StateDAO stateDAO;
     private UserDAO userDAO;
+    private OrdersDAO ordersDAO;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -39,6 +41,10 @@ public class orderDetailsServlet extends HttpServlet {
 
         if(userDAO == null){
             userDAO = new UserDAO((DataSource) request.getServletContext().getAttribute("DataSource"));
+        }
+
+        if(ordersDAO == null){
+            ordersDAO = new OrdersDAO((DataSource) request.getServletContext().getAttribute("DataSource"));
         }
 
 
@@ -74,9 +80,26 @@ public class orderDetailsServlet extends HttpServlet {
             return;
         }
 
+        Orders o = null;
+
+        try{
+            o = ordersDAO.retrieve(orderId);
+        }catch (Exception e){
+            System.out.println(e);
+            response.sendRedirect("./homepage.jsp?OrderDetailFoundError=true");
+            return;
+        }
+
         request.setAttribute("userFound",true);
         request.setAttribute("orderId",orderId);
         request.setAttribute("orderUpdates",orderUpdates);
+
+        if(o.getOrderCourier() != null){
+            request.setAttribute("orderCourier", o.getOrderCourier().getName());
+        }else{
+            request.setAttribute("orderCourier","Non ancora assegnato");
+        }
+
         RequestDispatcher rD = request.getRequestDispatcher("./orderDetail.jsp");
         rD.forward(request, response);
         return;

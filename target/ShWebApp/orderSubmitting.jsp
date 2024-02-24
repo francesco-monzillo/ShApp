@@ -179,13 +179,45 @@
               'topicName': "<%=assDispName%>"
             },
             statusCode: {
-              200: function() {
-                location.href = '<%=request.getContextPath()%>/homepage.jsp?orderPublished=1';
+              200: function () {
+                console.log("Order Published on topic")
+                $.ajax({
+                  type: 'POST',
+                  dataType: 'text',
+                  url: '<%=request.getContextPath()%>/verifyUpdateableUserServlet',
+                  data: {
+                    'email': email
+                  },
+                  success: function (risultato) {
+                    $.ajax({
+                      type: 'POST',
+                      dataType: 'jsonp',
+                      url: '<%=request.getServletContext().getAttribute("FunctionDomain")%>/SendUpdateToUser',
+                      data: {
+                        'code': '<%=System.getenv("functionDomainCodeAccess")%>',
+                        'receiverAddress': email,
+                        'subject': "ShApp: Inserimento Ordine",
+                        'message': "Ciao " + risultato + "\nL'ordine da te commissionato presso <%=((AssignmentDispatcher) session.getAttribute("Account")).getName()%> è stato preso in carico sulla piattaforma ShApp, puoi visualizzarlo facendo il login sull'app"
+                      },
+                      statusCode: {
+                        200: function () {
+                          location.href = '<%=request.getContextPath()%>/homepage.jsp?orderPublished=1';
+                        },
+                        404: function () {
+                          location.href = '<%=request.getContextPath()%>/homepage.jsp?orderPublished=1&errorMail1=true';
+                        },
+                      }
+                    });
+                  },
+                  error: function () {
+                    location.href = '<%=request.getContextPath()%>/homepage.jsp?orderPublished=1&errorMail2=true';
+                  },
+                });
               },
-              404: function (){
+              404: function () {
                 functionNegativeResult(); //Configurare questa funzione per fare in modo di allertare l'utente con la comparsa di
-              }             //un elemento grafico nel caso in cui il publish dell'ordine sulla coda Azure Queue non è andato bene
-            },
+              }
+            }//un elemento grafico nel caso in cui il publish dell'ordine sulla coda Azure Queue non è andato bene
           });
         },
         error: function (){

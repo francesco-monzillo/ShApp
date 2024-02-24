@@ -177,3 +177,7 @@ button{
 .detailBody{
     display: grid;
 }
+
+.ordersDiv{
+    height: 76% !important;
+}

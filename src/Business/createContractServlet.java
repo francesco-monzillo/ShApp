@@ -111,11 +111,11 @@ public class createContractServlet extends HttpServlet {
         try{
             contractDAO.create(realInitialDate, realFinalDate, dispatcherName, c.getEmail(), propsOfContract);
 
-            request.setAttribute("topicName", assDisp.getName());
+            /*request.setAttribute("topicName", assDisp.getName());
             request.setAttribute("subscriptionName", courierName);
             RequestDispatcher rd = request.getRequestDispatcher("./listenFromTopicServlet");
 
-            rd.include(request, response);
+            rd.include(request, response);*/
 
         }catch (Exception e){
             System.out.println(e);

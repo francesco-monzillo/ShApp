@@ -234,7 +234,7 @@ public class OrdersDAO {
                 User u = null;
 
                 try{
-                    aD = new AssignmentDispatcher(assignmentDispatcherName);
+                    aD = aDDAO.retrieve(assignmentDispatcherName);
                 }catch (Exception e){
                     throw new Exception("No assDisp found for this Order... something's wrong");
                 }

@@ -25,11 +25,11 @@ public class LoggedInSessionFilter implements Filter {
         HttpSession session = newRequest.getSession(false);
         HttpServletResponse resp= (HttpServletResponse) response;
         if(session == null){
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./.auth/login/google");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./homepage.jsp");
             dispatcher.forward(request, response);
             return;
         }else if(session.getAttribute("Account") == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./.auth/login/google");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./homepage.jsp");
             dispatcher.forward(request, response);
             return;
         }

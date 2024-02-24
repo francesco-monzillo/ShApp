@@ -160,7 +160,7 @@ public class ContractDAO {
 
         try{
 
-            PreparedStatement pS = conn.prepareStatement("SELECT c.courier_id FROM CONTRACT AS c WHERE c.dispatcher_id = ? c.end > ?;");
+            PreparedStatement pS = conn.prepareStatement("SELECT c.courier_id FROM CONTRACT AS c WHERE c.dispatcher_id = ? AND c.end > ?;");
             pS.setString(1,assName);
             pS.setDate(2, new Date(Calendar.getInstance().getTime().getTime()));
 

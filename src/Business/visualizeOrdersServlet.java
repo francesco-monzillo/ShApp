@@ -77,6 +77,7 @@ public class visualizeOrdersServlet extends HttpServlet {
 
             }
 
+
             request.setAttribute("orderList", orders);
             RequestDispatcher rD = request.getRequestDispatcher("./ordersAssociated.jsp");
             rD.forward(request, response);

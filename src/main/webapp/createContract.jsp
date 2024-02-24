@@ -56,6 +56,7 @@
                 agreementsFound = false;
               }catch (Exception e){
                 System.out.println("Error trying to retrieve contract associated with Assignment Dispatcher");
+                System.out.println(e);
                 agreementsFound = false;
               }
 
@@ -63,7 +64,10 @@
                 couriers = courierDAO.retrieveAll();
 
             %>
-              <label for="couriers" class="placeholder">Corriere</label>
+
+
+            <label for="couriers" class="placeholder">Corriere</label>
+            <p class="errors" id="courier_name_error"></p>
               <select class="input" name="couriers" id="couriers">
 
                 <%for(int i = 0; i < couriers.size(); i++){
@@ -95,6 +99,7 @@
             <%}%>
 
             <%
+              if(atLeastOneCourier){
               ShippingPropertyDAO shippingPropertyDAO = new ShippingPropertyDAO((DataSource) request.getServletContext().getAttribute("DataSource"));
               try{
                 ArrayList<ShippingProperty> properties = shippingPropertyDAO.retrieveAll();%>
@@ -128,6 +133,7 @@
 
 
             <button type="button" class="submit" onclick="createContract()">Invia</button>
+            <%}%>
 
             <div style="color: transparent;">HiddenDiv</div>
 
@@ -253,17 +259,32 @@
 
     var data_inizio = document.getElementById("data_inizio").value;
     var data_fine = document.getElementById("data_fine").value;
+    var corriere = document.getElementById("couriers").value;
+
+    if(corriere.trim().length == 0){
+      document.querySelector("#courier_name_error").innerHTML = "Inserire una data valida: non vuota e precedente alla data odierna";
+      document.querySelector("#courier_name_error").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#courier_name_error").innerHTML = "";
+    }
+
+
 
     if(data_inizio === "" || data_inizio<today) {
       document.querySelector("#initial_date_error").innerHTML = "Inserire una data valida: non vuota e precedente alla data odierna";
       document.querySelector("#initial_date_error").style.display = "block";
       booleano = false;
+    }else{
+      document.querySelector("#initial_date_error").innerHTML = "";
     }
 
     if(data_fine === "" || data_fine<today) {
       document.querySelector("#final_date_error").innerHTML = "Inserire una data valida: non vuota e precedente alla data odierna";
       document.querySelector("#final_date_error").style.display = "block";
       booleano = false;
+    }else{
+      document.querySelector("#final_date_error").innerHTML = "";
     }
 
     return booleano;
