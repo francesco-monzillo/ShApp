@@ -48,7 +48,7 @@
 <div id = "ShAppArchitecture">
   
   <h1>Architettura Cloud</h1>
-  <img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/main/ShAppArchitectureDiagram.png">
+  <img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/main/ShappArc2.png">
 
 
   <h2>WorkFlow</h2>
