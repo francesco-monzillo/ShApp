@@ -58,20 +58,28 @@
         <input id="street" class="input" name="street" type="text" placeholder="" required/>
 
 
+        <p class="errors" id="streetNumberError"></p>
         <label for="streetNumber" class="placeholder">N°</label>
         <input id="streetNumber" class="input" name="streetNumber" type="number" placeholder="" required/>
 
         <p>Dimensioni</p>
 
+        <p class="errors" id="lenghtError"></p>
         <label for="lenght" class="placeholder">Lunghezza</label>
         <input id="lenght" class="input" name="lenght" type="number" placeholder="" required/>
 
+
+        <p class="errors" id="widthError"></p>
         <label for="width" class="placeholder">Larghezza</label>
         <input id="width" class="input" name="width" type="number" placeholder="" required/>
 
+
+        <p class="errors" id="heightError"></p>
         <label for="height" class="placeholder">Altezza</label>
         <input id="height" class="input" name="height" type="number" placeholder="" required/>
 
+
+        <p class="errors" id="weightError"></p>
         <label for="weight" class="placeholder">Peso (Grammi)</label>
         <input id="weight" class="input" name="weight" type="number" placeholder="" required/>
 
@@ -98,6 +106,8 @@
           }%>
         <p>Contatto</p>
 
+
+        <p class="errors" id="emailError"></p>
         <label for="email" class="placeholder">Email Utente</label>
         <input id="email" class="input" name="email" type="email" placeholder="" required/>
 
@@ -125,7 +135,128 @@
     assDispName = assDisp.getName();
   %>
 
+  function checkEventualErrors(){
+
+    var booleano = true;
+
+    var state = document.getElementById("state").value;
+    var country = document.getElementById("country").value;
+    var district = document.getElementById("district").value;
+    var zipCode = document.getElementById("zipCode").value;
+    var street = document.getElementById("street").value;
+    var streetnumber = document.getElementById("streetNumber").value;
+    var lenght = document.getElementById("lenght").value;
+    var width = document.getElementById("width").value;
+    var height = document.getElementById("height").value;
+    var weight = document.getElementById("weight").value;
+    var email = document.getElementById("email").value;
+
+    var containsNumbers = /\d/;
+    var containsLetters = /[a-zA-Z]/;
+    var isAnEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if(state.trim().length === 0 || containsNumbers.test(state)){
+      document.querySelector("#stateError").innerHTML = "Stato non valido: può contenere solo lettere";
+      document.querySelector("#stateError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#stateError").innerHTML = "";
+    }
+
+    if(country.trim().length === 0 || containsNumbers.test(country)){
+      document.querySelector("#countryError").innerHTML = "Paese non valido: può contenere solo lettere";
+      document.querySelector("#countryError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#countryError").innerHTML = "";
+    }
+
+    if(district.trim().length === 0 || containsNumbers.test(district)){
+      document.querySelector("#districtError").innerHTML = "Provincia non valida: può contenere solo lettere";
+      document.querySelector("#districtError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#districtError").innerHTML = "";
+    }
+
+
+    if(zipCode.trim().length === 0 || containsLetters.test(zipCode)){
+      document.querySelector("#zipCodeError").innerHTML = "CAP non valido: può contenere solo cifre";
+      document.querySelector("#zipCodeError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#zipCodeError").innerHTML = "";
+    }
+
+    if(street.trim().length === 0 || containsNumbers.test(street)){
+      document.querySelector("#streetError").innerHTML = "Via non valida: può contenere solo lettere";
+      document.querySelector("#streetError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#streetError").innerHTML = "";
+    }
+
+    if(streetnumber.trim().length === 0 || containsLetters.test(streetnumber)){
+      document.querySelector("#streetNumberError").innerHTML = "Numero di via non valido: può contenere solo cifre";
+      document.querySelector("#streetNumberError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#streetNumberError").innerHTML = "";
+    }
+
+    if(lenght.trim().length === 0 || containsLetters.test(lenght)){
+      document.querySelector("#lenghtError").innerHTML = "Lunghezza non valida: può contenere solo cifre";
+      document.querySelector("#lenghtError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#lenghtError").innerHTML = "";
+    }
+
+
+    if(width.trim().length === 0 || containsLetters.test(width)){
+      document.querySelector("#widthError").innerHTML = "Larghezza non valida: può contenere solo cifre";
+      document.querySelector("#widthError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#widthError").innerHTML = "";
+    }
+
+
+    if(height.trim().length === 0 || containsLetters.test(height)){
+      document.querySelector("#heightError").innerHTML = "Altezza non valida: può contenere solo cifre";
+      document.querySelector("#heightError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#heightError").innerHTML = "";
+    }
+
+    if(weight.trim().length === 0 || containsLetters.test(weight)){
+      document.querySelector("#weightError").innerHTML = "Peso non valido: può contenere solo cifre";
+      document.querySelector("#weightError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#weightError").innerHTML = "";
+    }
+
+
+    if(email.trim().length === 0 || !isAnEmail.test(email)){
+      document.querySelector("#emailError").innerHTML = "Email non valida";
+      document.querySelector("#emailError").style.display = "block";
+      booleano = false;
+    }else{
+      document.querySelector("#emailError").innerHTML = "";
+    }
+
+
+    return booleano;
+
+  }
+
   function sendToQuery(){
+
+    if(! checkEventualErrors() ){
+      return;
+    }
 
     var propertiesList = document.getElementsByClassName("propertyCheckbox");
 
@@ -259,31 +390,6 @@
 
     }
 
-  }
-
-
-  function checkEventualErrors(){
-
-    today = yy + "-" + mm + "-" + dd;
-
-    var booleano = true;
-
-    var data_inizio = document.getElementById("data_inizio").value;
-    var data_fine = document.getElementById("data_fine").value;
-
-    if(data_inizio === "" || data_inizio<today) {
-      document.querySelector("#initial_date_error").innerHTML = "Inserire una data valida: non vuota e precedente alla data odierna";
-      document.querySelector("#initial_date_error").style.display = "block";
-      booleano = false;
-    }
-
-    if(data_fine === "" || data_fine<today) {
-      document.querySelector("#final_date_error").innerHTML = "Inserire una data valida: non vuota e precedente alla data odierna";
-      document.querySelector("#final_date_error").style.display = "block";
-      booleano = false;
-    }
-
-    return booleano;
   }
 
 

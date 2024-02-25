@@ -62,9 +62,24 @@
         %>
         <div class="ordersDiv" style="height: 76% !important;" id="<%=order.getId()%>">
           <form action="<%=request.getContextPath()%>/orderDetailsServlet" method="post">
-            <p class="titlePar">Assegnato in data <%=order.getAssignmentDate()%></p>
+            <%
+              String assDate;
+              String trackingCode;
+              if(order.getAssignmentDate() == null){
+                assDate = "Non ancora Assegnato";
+              }else{
+                assDate = order.getAssignmentDate().toString();
+              }
+
+              if(order.getTrackingCode() == null){
+                trackingCode = "Non ancora Disponibile";
+              }else{
+                trackingCode = order.getTrackingCode();
+              }
+            %>
+            <p class="titlePar">Assegnato in data <%=assDate%></p>
             <p class="littleDetailsPars">Per conto di: <%=order.getOrderDisp().getName()%></p>
-            <p class="littleDetailsPars">Data di creazione: <%=order.getCreationDate()%></p>
+            <p class="littleDetailsPars">Tracking Code: <%=trackingCode%></p>
             <p class="littleDetailsPars">Stato: <%=order.getState()%></p>
             <p class="littleDetailsPars">Paese: <%=order.getCountry()%></p>
             <p class="littleDetailsPars">Stato di consegna: <%=orderShipmentState%></p>
@@ -72,7 +87,7 @@
             <input type="hidden" name="orderId" value="<%=order.getId()%>">
             <input type="hidden" name="orderDisp" value="<%=order.getOrderDisp().getName()%>"> <!--Preoccuparsi di ottenere anche il nome del dispatcher-->
             <input type="hidden" name="orderCreationDate" value="<%=order.getCreationDate()%>">
-            <input type="hidden" name="orderAssignmentDate" value="<%=order.getAssignmentDate()%>">
+            <input type="hidden" name="orderAssignmentDate" value="<%=assDate%>">
             <input type="hidden" name="orderShipmentState" value="<%=orderShipmentState%>">
             <input type="hidden" name="orderState" value="<%=order.getState()%>">
             <input type="hidden" name="orderCountry" value="<%=order.getCountry()%>">
@@ -80,7 +95,7 @@
             <input type="hidden" name="orderWidth" value="<%=order.getWidth()%>">
             <input type="hidden" name="orderHeight" value="<%=order.getHeight()%>">
             <input type="hidden" name="orderWeight" value="<%=order.getWeight()%>">
-            <input type="hidden" name="orderTrackingCode" value="<%=order.getTrackingCode()%>">
+            <input type="hidden" name="orderTrackingCode" value="<%=trackingCode%>">
 
             <button type="submit"  class="orderDetailsButton">Dettagli</button>
           </form>

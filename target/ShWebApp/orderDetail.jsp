@@ -37,7 +37,7 @@
           <p class="orderDetailsPar"><b>Data di Assegnazione:</b> <%=request.getParameter("orderAssignmentDate")%></p>
           <p class="orderDetailsPar"><b>Per conto di: </b><%=request.getParameter("orderDisp")%></p>
           <p class="orderDetailsPar"><b>Corriere: </b><%=request.getAttribute("orderCourier")%></p>
-          <p class="orderDetailsPar"><b>Data di creazione: </b><%=request.getParameter("orderCreationDate")%></p>
+          <p class="orderDetailsPar"><b>Tracking Code: </b><%=request.getParameter("orderTrackingCode")%></p>
           <p class="orderDetailsPar"><b>Stato: </b><%=request.getParameter("orderState")%></p>
           <p class="orderDetailsPar"><b>Paese: </b><%=request.getParameter("orderCountry")%></p>
           <p class="orderDetailsPar"><b>Stato di consegna: </b><%=request.getAttribute("orderShipmentState")%></p>
