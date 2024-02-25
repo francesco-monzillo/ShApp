@@ -25,11 +25,8 @@
     <p style="padding-left:30px">In caso di eventuali malfunzionamenti o fallimenti, anche di portata geografica estesa, l'applicazione deve essere in grado di mantenersi comunque operativa</p>
     <p style="padding-left:60px">Più in dettaglio, quest'obiettivo viene raggiunto tramite la <b>ridondanza</b> e i meccanismi di <b>failover</b> offerti da diverse soluzioni in Azure</p>
     <p>Servizi di riferimento: App serivce, MySQL Database, Service Bus</p>
+
     
-  
-  <li style="font-size:1.5em"><b>Riduzione dei costi operativi</b></li>
-    <p style="padding-left:30px">L'applicazione deve comportare costi che riducano lo sforzo economico che si dovrebbe impiegare tramite un Infrastruttura on-premise di uguale capacità e, se possibile, si ambisce alla flessibilità dei costi in base all' utilizzo di risorse</p>
-  
   <li style="font-size:1.5em"><b>Bilanciamento del carico</b></li>
     <p style="padding-left:30px">L'applicazione sfrutta la <b>computazione</b> e i <b>meccanismi specializzati per il Cloud</b> di Azure in modo tale da doversi trovare a gestire solo i carichi di lavoro leggeri, senza doversi preoccupare di implementare vari algoritmi di distribuzione del carico di lavoro</p>
     <p>Servizio di riferimento: Service Bus</p>
