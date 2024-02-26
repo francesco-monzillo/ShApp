@@ -1,6 +1,5 @@
 package MailService;
 
-import Publish_Subscribe.Couriers.Subscriber;
 import com.azure.communication.email.models.*;
 import com.azure.communication.email.*;
 import com.azure.core.util.polling.LongRunningOperationStatus;

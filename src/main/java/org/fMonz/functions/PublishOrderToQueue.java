@@ -3,8 +3,6 @@ package org.fMonz.functions;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
-import Publish_Subscribe.Couriers.Subscriber;
-import Publish_Subscribe.Publisher.Publisher;
 import ServiceBusTopics.PublishToTopic;
 import com.microsoft.azure.functions.annotation.*;
 import com.microsoft.azure.functions.*;

@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import MailService.sendMail;
-import Publish_Subscribe.Couriers.Subscriber;
+
 import com.microsoft.azure.functions.annotation.*;
 import com.microsoft.azure.functions.*;
 
