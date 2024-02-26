@@ -60,6 +60,7 @@
           <li>rendere noto un contratto stipulato con un corriere</li>
           <li>segnalare l'esistenza di un nuovo ordine ai corrieri con i quali ha stipulato un contratto</li>
         </ul>
+        <p></p>
         <p>In entrambi i casi, viene interpellata la Function App, con la differenza che, nel primo caso, la Function App interagisce con il Service Bus per creare una nuova sottoscrizione (identificata dal nome del Corriere), la quale sarà associata al topic corrispondente all'Assignment Dispatcher che ha fatto l'accesso. Nel secondo caso, la Function App si occupa di fare il Publish di un messaggio sul topic (identificato dal nome dell'Assignment Dispatcher che ha fatto l'accesso). Tale messaggio è un JSON che verrà tradotto in una struttura dati che contiene tutte le informazioni, di interesse per un corriere, riguardanti l'ordine appena inserito. In attesa di ricevere riscontri, dai corrieri che riceveranno tale messaggio,(tutti coloro che hanno un contratto attivo con l'Assignment Dispatcher in questione), verrà controllata, ogni 5 minuti (periodo scelto a scopo di dimostrazione del funzionamento del sistema), l'esistenza di almeno un corriere interessato alla spedizione dell'ordine appena inserito. In caso positivo, l'ordine verrà assegnato al corriere che condivide più proprietà con l'ordine inserito rispetto al quelle concordate nel contratto, oppure, a parità di proprietà condivise, si sceglie il corriere che ha comunicato prima il suo interesse</p>
 <img align = "center" src = "https://github.com/francesco-monzillo/ShApp/blob/main/VisualizeOrderAppScreenShot.png">
     <li><h2>Corriere</h2></li>
@@ -68,6 +69,7 @@
         <li>Fare l'accesso sulla piattaforma Web</li>
         <li>Fare l'accesso come subscriber su uno o più topic sui quali è in ascolto</li>
       </ul>
+    <p></p>
     <p>Nel primo caso, potrà segnalare degli avanzamenti sugli ordini la cui spedizione è a suo carico; in tal modo gli utenti finali, se loggati sulla piattaforma, riceveranno una mail contenente l'avviso.</p>
     <p>Nel secondo caso, il corriere potrà rimanere in ascolto attivo su uno o più topic per poter ricevere l'avviso su un ordine che deve essere commissionato da un Assignment Dispatcher. A questo punto, usando una qualche logica di business, il corriere deciderà se interessarsi o meno alla possibilità di spedire gli elementi contenuti nell'ordine. In caso positivo, verrà inviata una richiesta all' App Service, il quale, si occuperà di registrare l'interesse proveniente da tale corriere.</p>
     <li><h2>Utente Finale</h2></li>
