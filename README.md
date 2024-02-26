@@ -6,7 +6,7 @@
   <p>Più in dettaglio, ShApp offre supporto a tre viste principali, ognuna delle quali rappresenta un suo caso d'uso:</p>
 
   <ul>
-    <li>Assignment Dispatcher</li>
+    <li>Assignment Dispatcher</li> 
     <li>Corriere</li>
     <li>Utente Finale</li>
   </ul>
