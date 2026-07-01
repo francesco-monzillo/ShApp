@@ -1,82 +1,92 @@
-<h1>ShApp Platform</h1>
+# Shipping Assignment Application (ShApp)
 
-<div id = "introduction">
-  <p>'ShApp' (Shipping Assignment app) si propone come una piattaforma che ha l'obiettivo di centralizzare la gestione delle dinamiche che si originano dagli acquisti di prodotti on-line.</p>
-  
-  <p>Più in dettaglio, ShApp offre supporto a tre viste principali, ognuna delle quali rappresenta un suo caso d'uso:</p>
+ShApp is a cloud-based web application designed to centralize and streamline the post-purchase logistics and order dispatch dynamics that arise from online shopping. 
 
-  <ul>
-    <li>Assignment Dispatcher</li> 
-    <li>Corriere</li>
-    <li>Utente Finale</li>
-  </ul>
+The application establishes a protocol where couriers are integrated as highly available resources. E-commerce platforms or dispatchers can assign shipments to them based on pre-negotiated contracts and dynamically calculated matching properties.
 
-<p style:"font-weight= bold">In seguito, vedremo i workFlow associati ad ognuno di essi.</p>
+---
 
-<p>La piattaforma, per poter essere distribuita e offerta al pubblico, sfrutta il meccanismo di hosting ed altri servizi di Azure, allo scopo di migliorare la sua resa su diversi aspetti:</p>
+## Table of Contents
+- [Core Objectives](#core-objectives)
+- [System Roles & Features](#system-roles--features)
+- [Cloud Architecture & Services](#cloud-architecture--services)
+- [Key Workflows](#key-workflows)
+  - [1. Assignment Dispatcher Workflow](#1-assignment-dispatcher-workflow)
+  - [2. Courier Workflow](#2-courier-workflow)
+  - [3. End User Workflow](#3-end-user-workflow)
 
-<ul>
-  
-  <li style="font-size:1.5em""><b>Scalabilità</b></li>
-    <p style="padding-left:30px">L'applicazione risultante, deve essere in grado di aumentare o ridurre la capacità delle risorse IT, impiegate per la distribuzione, in base all'aumento o riduzione della domanda, in tempo reale</p>
-    <p>Servizi di riferimento: App Service, Function App, MySQL Database, Service Bus</p>
-  
-  <li style="font-size:1.5em"><b>Disponibilità</b></li>
-    <p style="padding-left:30px">In caso di eventuali malfunzionamenti o fallimenti, anche di portata geografica estesa, l'applicazione deve essere in grado di mantenersi comunque operativa</p>
-    <p style="padding-left:60px">Più in dettaglio, quest'obiettivo viene raggiunto tramite la <b>ridondanza</b> e i meccanismi di <b>failover</b> offerti da diverse soluzioni in Azure</p>
-    <p>Servizi di riferimento: App serivce, MySQL Database, Service Bus</p>
+---
 
-    
-  <li style="font-size:1.5em"><b>Bilanciamento del carico</b></li>
-    <p style="padding-left:30px">L'applicazione sfrutta la <b>computazione</b> e i <b>meccanismi specializzati per il Cloud</b> di Azure in modo tale da doversi trovare a gestire solo i carichi di lavoro leggeri, senza doversi preoccupare di implementare vari algoritmi di distribuzione del carico di lavoro</p>
-    <p>Servizio di riferimento: Service Bus</p>
-  
-  <li style="font-size:1.5em"><b>Postura di sicurezza di base</b></li>
-    <p style="padding-left:30px">L'applicazione sfrutta un Application Gateway, collegato ad una rete virtuale, la quale, grazie all'impostazione di molteplici regole per un Web Application Firewall, rifiuta le richieste in ingresso che sono formattate in modo potenzialmente dannoso o addirittura volontariamente malevolo. Tra i vari inconvenienti scansati abbiamo: SQL Injection, DDOS, Attacchi tramite scripting, ecc...</p>
-  
-  <li style="font-size:1.5em"><b>Gestione esterna delle identità</b></li>
-    <p style="padding-left:30px">L'applicazione non gestisce, in maniera diretta, l'autenticazione degli utenti, bensì fa uso della funzionalità di Social Identity Provider offerta da Google. In questo modo, ShApp, può beneficiare di un servizio di autenticazione sofisticato già pronto, potendosi concentrare ed evolvere sulla sua missione principale</p>
-    <p>Servizio di riferimento: Azure AD B2C (con Google come Social Identity Provider)</p>
+## Core Objectives <a name="core_objectives"></a>
 
-</ul>
-  
-  
-</div>
+By leveraging cloud infrastructure, ShApp addresses critical operational needs:
+
+*   **Scalability**: Automatically adjusts resources in real time to match fluctuating demand (utilizing App Service, Function App, MySQL, and Service Bus).
+*   **High Availability**: Ensures continuous operations through redundancy and failover mechanisms.
+*   **Load Balancing**: Offloads heavy processing and manages task distribution using messaging queues.
+*   **Robust Security**: Employs an Azure Application Gateway with a Web Application Firewall (WAF) to mitigate risks like SQL Injection, DDoS, and cross-site scripting.
+*   **Identity Management**: Outsources authentication to a trusted external system, integrating Azure AD B2C with Google as a Social Identity Provider.
+
+---
+
+## System Roles & Features <a name="system-roles--features"></a>
+
+ShApp features tailored web interfaces and permissions for three distinct user roles:
+
+### 1. Assignment Dispatcher
+*   **Order Creation**: Input new delivery requests with specific details (dimensions, weight, destination, etc.).
+*   **Contract Management**: Define and register delivery contracts with affiliated couriers, outlining agreed-upon service-level properties (e.g., international shipping support, fragile handling, weight limits, delivery timelines).
+*   **Order Tracking**: View and manage both active and historical orders.
+
+### 2. Courier
+*   **Express Interest**: Listen to dispatcher order boards and submit interest in fulfilling pending orders.
+*   **Update Shipments**: Provide progress updates (e.g., "In transit", "Delivered") on actively assigned shipments.
+*   **History**: Monitor past and active delivery assignments.
+
+### 3. End User (Customer)
+*   **Status Tracking**: View real-time active and past order history.
+*   **Email Notifications**: Receive automated email notifications immediately whenever the courier updates the shipment status.
+
+---
+
+## Cloud Architecture & Services <a name="cloud-architecture--services"></a>
+
+The application relies on a modern, event-driven Azure architecture:
+
+<img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/main/ShappArc2.png">
 
 
+*   **Azure App Service**: Hosts the core web application, facilitating balanced hosting and server-side workflow orchestration.
+*   **Azure Service Bus**: Acts as a fully managed message broker. It handles decoupling, load balancing, and reliable Pub/Sub messaging via *Topics* and *Subscriptions*.
+*   **Azure Function App**: An event-driven serverless component executing backend logic. Key functions include:
+    *   `addTopic`: Creates a dedicated Service Bus topic when a new dispatcher registers.
+    *   `contractStipulatedWithCourier`: Adds a courier subscription to the dispatcher's topic.
+    *   `publishOrderToQueue`: Publishes order details to a topic.
+    *   `sendUpdateToUser`: Triggers transactional updates via email.
+*   **Azure AD B2C**: Provides identity management, relying on Google as the federated Social Identity Provider.
+*   **Azure Application Gateway & WAF**: Secures the virtual network entry point against malicious traffic.
 
-<div id = "ShAppArchitecture">
-  
-  <h1>Architettura Cloud</h1>
-  <img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/main/ShappArc2.png">
+---
 
+## Key Workflows <a name="1-assignment-dispatcher-workflow"></a>
 
-  <h2>WorkFlow</h2>
+### 1. Assignment Dispatcher Workflow <a name="2-courier-workflow"></a>
+1.  **Registration/Login**: The dispatcher logs in via Google Auth.
+2.  **Topic Provisioning**: An Azure Function automatically registers a dedicated Service Bus topic for that dispatcher.
+3.  **Contract Stipulation**: When a contract is established with a courier, an Azure Function creates a subscription for that courier on the dispatcher's topic.
+4.  **Order Placement**: The dispatcher creates an order, which triggers the Function App to publish a message containing order parameters to the topic.
+5.  **Assignment Algorithm**: A background thread (`CheckInterestThread`) periodically checks for couriers expressing interest:
+    *   The order is assigned to the courier sharing the highest number of matching properties compared to their registered contract.
+    *   In the event of a tie, the system selects the courier who submitted their interest first.
 
-  <ul>
-    <li><h2>Assignment Dispatcher</h2></li>
-      <p>Il soggetto interessato, si registra con ruolo di Assignment Dispatcher (facendo l'accesso su Google). A questo punto, viene interpellata la Function App, la quale, tramite la sua identità gestita assegnata dal sistema, accede all'API di gestione del bus di servizio e inserisce un nuovo topic (identificato dal nome dell'Assignment Dispatcher).Successivamente, dopo aver fatto il login può</p>
-        <ul>
-          <li>rendere noto un contratto stipulato con un corriere</li>
-          <li>segnalare l'esistenza di un nuovo ordine ai corrieri con i quali ha stipulato un contratto</li>
-        </ul>
-        <p></p>
-        <p>In entrambi i casi, viene interpellata la Function App, con la differenza che, nel primo caso, la Function App interagisce con il Service Bus per creare una nuova sottoscrizione (identificata dal nome del Corriere), la quale sarà associata al topic corrispondente all'Assignment Dispatcher che ha fatto l'accesso. Nel secondo caso, la Function App si occupa di fare il Publish di un messaggio sul topic (identificato dal nome dell'Assignment Dispatcher che ha fatto l'accesso). Tale messaggio è un JSON che verrà tradotto in una struttura dati che contiene tutte le informazioni, di interesse per un corriere, riguardanti l'ordine appena inserito. In attesa di ricevere riscontri, dai corrieri che riceveranno tale messaggio,(tutti coloro che hanno un contratto attivo con l'Assignment Dispatcher in questione), verrà controllata, ogni 5 minuti (periodo scelto a scopo di dimostrazione del funzionamento del sistema), l'esistenza di almeno un corriere interessato alla spedizione dell'ordine appena inserito. In caso positivo, l'ordine verrà assegnato al corriere che condivide più proprietà con l'ordine inserito rispetto al quelle concordate nel contratto, oppure, a parità di proprietà condivise, si sceglie il corriere che ha comunicato prima il suo interesse</p>
-<img align = "center" src = "https://github.com/francesco-monzillo/ShApp/blob/main/VisualizeOrderAppScreenShot.png">
-    <li><h2>Corriere</h2></li>
-      <p>La vista del corriere, prevede due possibili punti d'accesso o di interazione con la piattaforma. Un corriere può</p>
-      <ul>
-        <li>Fare l'accesso sulla piattaforma Web</li>
-        <li>Fare l'accesso come subscriber su uno o più topic sui quali è in ascolto</li>
-      </ul>
-    <p></p>
-    <p>Nel primo caso, potrà segnalare degli avanzamenti sugli ordini la cui spedizione è a suo carico; in tal modo gli utenti finali, se loggati sulla piattaforma, riceveranno una mail contenente l'avviso.</p>
-    <p>Nel secondo caso, il corriere potrà rimanere in ascolto attivo su uno o più topic per poter ricevere l'avviso su un ordine che deve essere commissionato da un Assignment Dispatcher. A questo punto, usando una qualche logica di business, il corriere deciderà se interessarsi o meno alla possibilità di spedire gli elementi contenuti nell'ordine. In caso positivo, verrà inviata una richiesta all' App Service, il quale, si occuperà di registrare l'interesse proveniente da tale corriere.</p>
-    <li><h2>Utente Finale</h2></li>
-      <p>L'utente finale può registrarsi con il corrispondente ruolo (facendo l'accesso su Google). Di seguito, sarà in grado di visionare gli aggiornamenti sugli ordini che sono stati comunicati dai rispettivi corrieri responsabili</p>
-  </ul>
+### 2. Courier Workflow <a name="2-courier-workflow"></a>
+*   **Active Listening**: The courier remains connected as a subscriber to one or more dispatcher topics, receiving real-time notifications about newly created orders.
+*   **Interest Registration**: Utilizing internal business logic, the courier chooses whether to apply. If they apply, a request is sent to the App Service to log their interest.
+*   **Shipment Updates**: Once assigned, the courier uses the web portal to input state updates, which are immediately processed to update the database and notify the customer.
 
-</div>
+### 3. End User Workflow <a name="3-end-user-workflow"></a>
+*   **Access**: The user authenticates using Google.
+*   **Monitoring**: The user checks shipment timelines on their dashboard or receives real-time progress updates directly in their email inbox.
 
 <div id = "badges">
   
