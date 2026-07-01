@@ -68,9 +68,9 @@ The application relies on a modern, event-driven Azure architecture:
 
 ---
 
-## Key Workflows <a name="1-assignment-dispatcher-workflow"></a>
+## Key Workflows <a name="key-workflows"></a>
 
-### 1. Assignment Dispatcher Workflow <a name="2-courier-workflow"></a>
+### 1. Assignment Dispatcher Workflow <a name="1-assignment-dispatcher-workflow"></a>
 1.  **Registration/Login**: The dispatcher logs in via Google Auth.
 2.  **Topic Provisioning**: An Azure Function automatically registers a dedicated Service Bus topic for that dispatcher.
 3.  **Contract Stipulation**: When a contract is established with a courier, an Azure Function creates a subscription for that courier on the dispatcher's topic.
