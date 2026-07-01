@@ -17,7 +17,7 @@ The application establishes a protocol where couriers are integrated as highly a
 
 ---
 
-## Core Objectives <a name="core_objectives"></a>
+## Core Objectives <a name="core-objectives"></a>
 
 By leveraging cloud infrastructure, ShApp addresses critical operational needs:
 
