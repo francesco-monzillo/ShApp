@@ -53,7 +53,7 @@ ShApp features tailored web interfaces and permissions for three distinct user r
 
 The application relies on a modern, event-driven Azure architecture:
 
-<img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/main/ShappArc2.png">
+<img  align = "center"  src = "https://github.com/francesco-monzillo/ShApp/blob/web_app/ShappArc2.png">
 
 
 *   **Azure App Service**: Hosts the core web application, facilitating balanced hosting and server-side workflow orchestration.
