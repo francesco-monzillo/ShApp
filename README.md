@@ -22,7 +22,7 @@ The application establishes a protocol where couriers are integrated as highly a
 By leveraging cloud infrastructure, ShApp addresses critical operational needs:
 
 *   **Scalability**: Automatically adjusts resources in real time to match fluctuating demand (utilizing App Service, Function App, MySQL Database, and Service Bus).
-*   **High Availability**: Ensures continuous operations through redundancy and failover mechanisms. (utilizing App Service, MySQL Database, Service Bus)
+*   **High Availability**: Ensures continuous operations through redundancy and failover mechanisms (utilizing App Service, MySQL Database, Service Bus).
 *   **Load Balancing**: Offloads heavy processing and manages task distribution using messaging queues.
 *   **Robust Security**: Employs an Azure Application Gateway with a Web Application Firewall (WAF) to mitigate risks like SQL Injection, DDoS, and cross-site scripting.
 *   **Identity Management**: Outsources authentication to a trusted external system, integrating Azure AD B2C with Google as a Social Identity Provider.
